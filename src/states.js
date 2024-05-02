@@ -19,11 +19,16 @@ function LocationSelector() {
     try {
       setLoadingCountries(true);
       const response = await fetch('https://crio-location-selector.onrender.com/countries');
+      if (!response.ok) {
+        throw new Error('Failed to fetch countries');
+      }
       const data = await response.json();
       setCountries(data);
       setLoadingCountries(false);
     } catch (error) {
       console.error('Error fetching countries:', error);
+      setCountries([]);
+      setLoadingCountries(false);
     }
   };
 
