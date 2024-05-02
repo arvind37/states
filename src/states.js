@@ -31,11 +31,16 @@ function LocationSelector() {
     try {
       setLoadingStates(true);
       const response = await fetch(`https://crio-location-selector.onrender.com/country=${country}/states`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch states');
+      }
       const data = await response.json();
       setStates(data);
       setLoadingStates(false);
     } catch (error) {
       console.error('Error fetching states:', error);
+      setStates([]);
+      setLoadingStates(false);
     }
   };
 
